@@ -1,0 +1,878 @@
+/*
+ * ╔══════════════════════════════════════════════════════════════╗
+ * ║         SHIELDOPS — ADMIN DASHBOARD THEME v2.2              ║
+ * ║  Sélecteur : html.dark  (Tailwind documentElement)          ║
+ * ║  Dark  : #060d1f → #0a1628 | accents #2E75B6 / #60a5fa     ║
+ * ║  Light : #c8dff8 → #deeeff | card #fff | accent #a8d4ff    ║
+ * ╚══════════════════════════════════════════════════════════════╝
+ *
+ * INSTALLATION — une seule ligne dans src/index.css :
+ *   @import './shieldops-admin-theme.css';
+ *
+ * CORRECTIF v2.2 :
+ *   - LIGHT MODE : tous les cadres sombres (bg-[#0a0c14],
+ *     bg-[#0f172a], bg-[#0f1423], bg-[#050810], bg-slate-900)
+ *     deviennent BLANCS avec texte foncé.
+ *   - Textes dans cards light : forcés en foncé (#0f2a55).
+ *   - Barre nav AdminPortal light : blanche + texte foncé.
+ *   - DARK MODE : inchangé.
+ */
+
+/* ════════════════════════════════════════════════════════
+   KEYFRAMES
+════════════════════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ════════════════════════════════════════════════════════
+   FOND  LIGHT  (html sans .dark)
+════════════════════════════════════════════════════════ */
+html:not(.dark) {
+  background: #c8dff8;
+}
+html:not(.dark) body {
+  background: transparent;
+  color: #1e293b;
+}
+html:not(.dark) body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 72% -8%,  rgba(186,214,255,.65) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at -8%  90%,  rgba(147,197,253,.70) 0%, transparent 60%),
+    linear-gradient(135deg, #b8d4f0 0%, #c8dff8 50%, #d8eafc 100%);
+}
+
+/* ════════════════════════════════════════════════════════
+   FOND  DARK  (html.dark)
+════════════════════════════════════════════════════════ */
+html.dark {
+  background: #060d1f;
+}
+html.dark body {
+  background: transparent;
+  color: #ffffff;
+}
+html.dark body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 72% -8%,  rgba(30,58,138,.50) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at -8%  90%,  rgba(17,24,90, .55) 0%, transparent 60%),
+    linear-gradient(135deg, #060d1f 0%, #0a1628 50%, #060d1f 100%);
+}
+
+/* ════════════════════════════════════════════════════════
+   BG TAILWIND — DARK
+════════════════════════════════════════════════════════ */
+html.dark .bg-slate-900, html.dark .bg-gray-900  { background-color: #060d1f   !important; }
+html.dark .bg-slate-800, html.dark .bg-gray-800  { background-color: #0a1628   !important; }
+html.dark .bg-slate-700, html.dark .bg-gray-700  { background-color: #111e3a   !important; }
+html.dark .bg-slate-600                           { background-color: #162a55   !important; }
+html.dark .bg-slate-100, html.dark .bg-gray-100  { background-color: rgba(255,255,255,.06) !important; }
+html.dark .bg-slate-50,  html.dark .bg-gray-50   { background-color: rgba(255,255,255,.04) !important; }
+html.dark .bg-white                               { background-color: #0f1e3d   !important; }
+html.dark .bg-blue-900   { background-color: #0f1e3d !important; }
+html.dark .bg-blue-800   { background-color: #162a55 !important; }
+
+/* ════════════════════════════════════════════════════════
+   BG TAILWIND — LIGHT
+════════════════════════════════════════════════════════ */
+html:not(.dark) .bg-slate-900, html:not(.dark) .bg-gray-900 { background-color: #b8d4f0 !important; }
+html:not(.dark) .bg-slate-800, html:not(.dark) .bg-gray-800 { background-color: #c8dff8 !important; }
+html:not(.dark) .bg-slate-700                                { background-color: #deeeff !important; }
+html:not(.dark) .bg-slate-600                                { background-color: #e8f2ff !important; }
+html:not(.dark) .bg-slate-100, html:not(.dark) .bg-gray-100 { background-color: #f0f7ff !important; }
+html:not(.dark) .bg-slate-50,  html:not(.dark) .bg-gray-50  { background-color: rgba(255,255,255,.85) !important; }
+html:not(.dark) .bg-white                                    { background-color: #ffffff !important; }
+
+/* ════════════════════════════════════════════════════════
+   HARDCODED DARK BGs — LIGHT MODE → WHITE
+   
+   AdminPortal uses bg-[#0a0c14], bg-[#0f172a],
+   bg-[#0f1423], bg-[#050810], etc.
+   In LIGHT mode they must become white.
+   In DARK mode they stay dark (handled separately).
+════════════════════════════════════════════════════════ */
+html:not(.dark) [class*="bg-[#0a0c14]"],
+html:not(.dark) [class*="bg-[#0f172a]"],
+html:not(.dark) [class*="bg-[#0f1423]"],
+html:not(.dark) [class*="bg-[#050810]"],
+html:not(.dark) [class*="bg-[#0d1b2a]"],
+html:not(.dark) [class*="bg-[#111827]"],
+html:not(.dark) [class*="bg-[#1a1f2e]"],
+html:not(.dark) [class*="bg-[#0a0e1a]"],
+html:not(.dark) [class*="bg-[#080c14]"],
+html:not(.dark) [class*="bg-[#060d1f]"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-color: rgba(168,212,255,.35) !important;
+  color: #0f2a55 !important;
+}
+
+/* Text inside those containers in light mode → dark */
+html:not(.dark) [class*="bg-[#0a0c14]"] *,
+html:not(.dark) [class*="bg-[#0f172a]"] *,
+html:not(.dark) [class*="bg-[#0f1423]"] *,
+html:not(.dark) [class*="bg-[#050810]"] *,
+html:not(.dark) [class*="bg-[#0d1b2a]"] *,
+html:not(.dark) [class*="bg-[#111827]"] *,
+html:not(.dark) [class*="bg-[#1a1f2e]"] *,
+html:not(.dark) [class*="bg-[#0a0e1a]"] *,
+html:not(.dark) [class*="bg-[#080c14]"] *,
+html:not(.dark) [class*="bg-[#060d1f]"] * {
+  color: #0f2a55 !important;
+}
+
+/* Force text-white inside dark-bg cards to be dark in light mode
+   (higher specificity than the global .text-white rule) */
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-white,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-white,
+html:not(.dark) [class*="bg-[#0f1423]"] .text-white,
+html:not(.dark) [class*="bg-[#050810]"] .text-white,
+html:not(.dark) [class*="bg-[#0d1b2a]"] .text-white,
+html:not(.dark) [class*="bg-[#111827]"] .text-white,
+html:not(.dark) [class*="bg-[#1a1f2e]"] .text-white,
+html:not(.dark) [class*="bg-[#080c14]"] .text-white,
+html:not(.dark) [class*="bg-[#060d1f]"] .text-white,
+html:not(.dark) [class*="bg-[#0a0c14]"] h1,
+html:not(.dark) [class*="bg-[#0a0c14]"] h2,
+html:not(.dark) [class*="bg-[#0a0c14]"] h3,
+html:not(.dark) [class*="bg-[#0a0c14]"] h4,
+html:not(.dark) [class*="bg-[#0f172a]"] h1,
+html:not(.dark) [class*="bg-[#0f172a]"] h2,
+html:not(.dark) [class*="bg-[#0f172a]"] h3,
+html:not(.dark) [class*="bg-[#0f172a]"] h4 {
+  color: #0f2a55 !important;
+}
+
+/* But keep colored text (badges, icons) in those containers */
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-indigo-400,
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-indigo-500,
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-indigo-600,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-indigo-400,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-indigo-500,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-indigo-600 {
+  color: #4f46e5 !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-emerald-400,
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-emerald-500,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-emerald-400,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-emerald-500,
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-teal-400,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-teal-400 {
+  color: #059669 !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-rose-400,
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-rose-500,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-rose-400,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-rose-500 {
+  color: #dc2626 !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-amber-400,
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-amber-500,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-amber-400,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-amber-500 {
+  color: #d97706 !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] .text-blue-400,
+html:not(.dark) [class*="bg-[#0f172a]"] .text-blue-400 {
+  color: #2563eb !important;
+}
+
+/* Icon containers inside dark frames → light blue in light mode */
+html:not(.dark) [class*="bg-[#0a0c14]"] [class*="bg-indigo-"],
+html:not(.dark) [class*="bg-[#0f172a]"] [class*="bg-indigo-"] {
+  background-color: rgba(79,70,229,.10) !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] [class*="bg-emerald-"],
+html:not(.dark) [class*="bg-[#0f172a]"] [class*="bg-emerald-"] {
+  background-color: rgba(5,150,105,.10) !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] [class*="bg-rose-"],
+html:not(.dark) [class*="bg-[#0f172a]"] [class*="bg-rose-"] {
+  background-color: rgba(220,38,38,.10) !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] [class*="bg-amber-"],
+html:not(.dark) [class*="bg-[#0f172a]"] [class*="bg-amber-"] {
+  background-color: rgba(217,119,6,.10) !important;
+}
+
+/* Inner sub-sections that use bg-white/5 or bg-white/10 → light bg */
+html:not(.dark) [class*="bg-[#0a0c14]"] [class*="bg-white/"],
+html:not(.dark) [class*="bg-[#0f172a]"] [class*="bg-white/"],
+html:not(.dark) [class*="bg-[#0f1423]"] [class*="bg-white/"] {
+  background-color: rgba(168,212,255,.12) !important;
+}
+
+/* Inner borders in light mode */
+html:not(.dark) [class*="bg-[#0a0c14]"] [class*="border-white/"],
+html:not(.dark) [class*="bg-[#0f172a]"] [class*="border-white/"],
+html:not(.dark) [class*="bg-[#0f1423]"] [class*="border-white/"] {
+  border-color: rgba(168,212,255,.30) !important;
+}
+
+/* DARK MODE — hardcoded bgs stay dark */
+html.dark [class*="bg-[#0a0c14]"] { background-color: #0a0c14 !important; }
+html.dark [class*="bg-[#0f172a]"] { background-color: #0a1628 !important; }
+html.dark [class*="bg-[#0f1423]"] { background-color: #0f1423 !important; }
+html.dark [class*="bg-[#050810]"] { background-color: #050810 !important; }
+
+/* ════════════════════════════════════════════════════════
+   LIGHT MODE — bg-slate-900 containers text fix
+   When bg-slate-900 becomes white, text-white inside
+   must become dark
+════════════════════════════════════════════════════════ */
+html:not(.dark) div.bg-slate-900 .text-white,
+html:not(.dark) section.bg-slate-900 .text-white,
+html:not(.dark) div.bg-slate-900 .text-slate-100,
+html:not(.dark) div.bg-slate-900 .text-slate-200 {
+  color: #0f2a55 !important;
+}
+html:not(.dark) div.bg-slate-900 .text-slate-400,
+html:not(.dark) div.bg-slate-900 .text-slate-500 {
+  color: #5a87b5 !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   TEXTES — DARK
+════════════════════════════════════════════════════════ */
+html.dark .text-white,
+html.dark .text-slate-100,
+html.dark .text-slate-200    { color: #ffffff !important; }
+html.dark .text-slate-300    { color: rgba(255,255,255,.82) !important; }
+html.dark .text-slate-400    { color: rgba(255,255,255,.52) !important; }
+html.dark .text-slate-500    { color: rgba(255,255,255,.32) !important; }
+html.dark .text-slate-600    { color: rgba(255,255,255,.22) !important; }
+html.dark .text-blue-400,
+html.dark .text-blue-300     { color: #60a5fa !important; }
+html.dark .text-blue-500,
+html.dark .text-blue-600     { color: #2E75B6 !important; }
+html.dark .text-indigo-400   { color: #818cf8 !important; }
+html.dark .text-indigo-500,
+html.dark .text-indigo-600   { color: #a5b4fc !important; }
+html.dark .text-emerald-400,
+html.dark .text-green-400    { color: #34d399 !important; }
+html.dark .text-emerald-500,
+html.dark .text-emerald-600  { color: #34d399 !important; }
+html.dark .text-rose-400,
+html.dark .text-red-400      { color: #f87171 !important; }
+html.dark .text-rose-500,
+html.dark .text-rose-600     { color: #fb7185 !important; }
+html.dark .text-amber-400,
+html.dark .text-yellow-400   { color: #fbbf24 !important; }
+html.dark .text-amber-500    { color: #f59e0b !important; }
+html.dark .text-teal-400     { color: #2dd4bf !important; }
+
+/* ════════════════════════════════════════════════════════
+   TEXTES — LIGHT
+════════════════════════════════════════════════════════ */
+html:not(.dark) .text-slate-900,
+html:not(.dark) .text-slate-800,
+html:not(.dark) .text-slate-700  { color: #0f2a55 !important; }
+html:not(.dark) .text-slate-600   { color: #1e3a5f !important; }
+html:not(.dark) .text-slate-500   { color: #3d6b9e !important; }
+html:not(.dark) .text-slate-400   { color: #5a87b5 !important; }
+html:not(.dark) .text-slate-300   { color: #7aa3c7 !important; }
+html:not(.dark) .text-white       { color: #ffffff !important; }
+html:not(.dark) .text-blue-600,
+html:not(.dark) .text-blue-500    { color: #2563eb !important; }
+html:not(.dark) .text-indigo-600,
+html:not(.dark) .text-indigo-500  { color: #4f46e5 !important; }
+html:not(.dark) .text-emerald-600,
+html:not(.dark) .text-green-600   { color: #059669 !important; }
+html:not(.dark) .text-rose-600,
+html:not(.dark) .text-red-600     { color: #dc2626 !important; }
+html:not(.dark) .text-amber-600   { color: #d97706 !important; }
+
+/* ════════════════════════════════════════════════════════
+   BORDURES — DARK
+════════════════════════════════════════════════════════ */
+html.dark .border-slate-700,
+html.dark .border-slate-800,
+html.dark .border-gray-700,
+html.dark .border-gray-800   { border-color: rgba(255,255,255,.08) !important; }
+html.dark .border-slate-600  { border-color: rgba(255,255,255,.12) !important; }
+html.dark .border-slate-200,
+html.dark .border-slate-100  { border-color: rgba(255,255,255,.06) !important; }
+html.dark .border-blue-500   { border-color: rgba(46,117,182,.55)  !important; }
+html.dark .border-white\/5   { border-color: rgba(255,255,255,.05) !important; }
+html.dark .border-white\/10  { border-color: rgba(255,255,255,.10) !important; }
+
+html.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(255,255,255,.06) !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   BORDURES — LIGHT
+════════════════════════════════════════════════════════ */
+html:not(.dark) .border-slate-200,
+html:not(.dark) .border-gray-200   { border-color: rgba(168,212,255,.40) !important; }
+html:not(.dark) .border-slate-100  { border-color: rgba(168,212,255,.30) !important; }
+html:not(.dark) .border-slate-300  { border-color: rgba(168,212,255,.60) !important; }
+html:not(.dark) .border-slate-700,
+html:not(.dark) .border-slate-800  { border-color: rgba(168,212,255,.30) !important; }
+html:not(.dark) .border-blue-300   { border-color: #a8d4ff !important; }
+
+html:not(.dark) .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-slate-200 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(168,212,255,.25) !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════════════════ */
+html.dark aside {
+  background: rgba(8,18,42,.88) !important;
+  border-right: 1px solid rgba(255,255,255,.07) !important;
+  backdrop-filter: blur(18px) !important;
+}
+html:not(.dark) aside {
+  background: rgba(233, 237, 241, 0.93) !important;
+  border-right: 1px solid rgba(168,212,255,.45) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+/* Sidebar nav buttons — LIGHT MODE */
+/* Par défaut : transparent, pas de fond */
+html:not(.dark) aside nav button {
+  color: #1e3a5f !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+html:not(.dark) aside nav button:hover {
+  color: #0f2a55 !important;
+  background: rgba(168,212,255,.20) !important;
+  background-color: rgba(168,212,255,.20) !important;
+}
+/* SEUL le bouton actif (bg-indigo-600) → bleu ciel */
+html:not(.dark) aside nav button.bg-indigo-600,
+html:not(.dark) aside nav button[class*="bg-[#5c56e3]"],
+html:not(.dark) aside nav button[class*="bg-indigo-600"],
+html:not(.dark) aside nav button[class*="shadow-indigo"],
+html:not(.dark) aside nav button[class*="translate-x"] {
+  background: #90D5FF !important;
+  background-color: #90D5FF !important;
+  color: #0f2a55 !important;
+  box-shadow: 0 4px 16px rgba(144,213,255,.45) !important;
+}
+html:not(.dark) aside nav button.bg-indigo-600 *,
+html:not(.dark) aside nav button[class*="bg-[#5c56e3]"] *,
+html:not(.dark) aside nav button[class*="bg-indigo-600"] *,
+html:not(.dark) aside nav button[class*="shadow-indigo"] *,
+html:not(.dark) aside nav button[class*="translate-x"] * {
+  color: #0f2a55 !important;
+}
+html:not(.dark) aside nav button svg {
+  color: #4295c2 !important;
+}
+
+/* Sidebar user card (bottom section) — LIGHT MODE → blanc + bordure bleu ciel */
+html:not(.dark) aside > div:last-child,
+html:not(.dark) aside [class*="user-card"],
+html:not(.dark) aside > :last-child > div {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-color: rgba(144,213,255,.50) !important;
+}
+html:not(.dark) aside > div:last-child *,
+html:not(.dark) aside > :last-child > div * {
+  color: #0f2a55 !important;
+}
+/* Keep logout button rose */
+html:not(.dark) aside button[class*="rose"] {
+  background: rgba(244,63,94,.08) !important;
+  border-color: rgba(244,63,94,.25) !important;
+}
+html:not(.dark) aside button[class*="rose"],
+html:not(.dark) aside button[class*="rose"] * {
+  color: #e11d48 !important;
+}
+/* Keep teal ID text */
+html:not(.dark) aside .text-teal-400,
+html:not(.dark) aside [class*="text-teal"] {
+  color: #0d9488 !important;
+}
+html:not(.dark) aside .text-white {
+  color: #0f4155 !important;
+}
+html:not(.dark) aside .text-slate-400,
+html:not(.dark) aside .text-slate-500 {
+  color: #6fa2c7 !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   HEADER / TOPBAR
+════════════════════════════════════════════════════════ */
+html.dark header {
+  background: rgba(6,13,31,.82) !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
+  backdrop-filter: blur(20px) !important;
+}
+html:not(.dark) header {
+  background: rgb(255, 255, 255) !important;
+  border-bottom: 1px solid rgba(168,212,255,.42) !important;
+  backdrop-filter: blur(20px) !important;
+}
+html:not(.dark) header h2 {
+  color: #97d4f9 !important;
+}
+html:not(.dark) header span {
+  color: #97d4f9 !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   CARDS — bg-white / bg-slate-900 containers
+════════════════════════════════════════════════════════ */
+html.dark div.bg-white,
+html.dark section.bg-white,
+html.dark main > div > div.bg-white {
+  background: rgba(15,30,61,.82) !important;
+  border-color: rgba(255,255,255,.08) !important;
+  backdrop-filter: blur(12px) !important;
+}
+html.dark div.bg-slate-900,
+html.dark section.bg-slate-900 {
+  background: rgba(10,22,40,.85) !important;
+  border-color: rgba(255,255,255,.07) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+html:not(.dark) div.bg-white,
+html:not(.dark) section.bg-white {
+  background: rgba(255,255,255,.92) !important;
+  border-color: rgba(168,212,255,.38) !important;
+  box-shadow: 0 2px 16px rgba(168,212,255,.15) !important;
+}
+html:not(.dark) div.bg-slate-900,
+html:not(.dark) section.bg-slate-900 {
+  background: #ffffff !important;
+  border-color: rgba(168,212,255,.35) !important;
+  box-shadow: 0 2px 16px rgba(168,212,255,.12) !important;
+}
+
+html.dark div.bg-white:hover,
+html.dark div.bg-slate-900:hover {
+  border-color: rgba(46,117,182,.25) !important;
+}
+html:not(.dark) div.bg-white:hover,
+html:not(.dark) div.bg-slate-900:hover {
+  border-color: rgba(168,212,255,.60) !important;
+}
+
+html.dark div.bg-slate-50,
+html.dark div.bg-gray-50 {
+  background: rgba(255,255,255,.03) !important;
+  border-color: rgba(255,255,255,.05) !important;
+}
+html:not(.dark) div.bg-slate-50,
+html:not(.dark) div.bg-gray-50 {
+  background: #f5faff !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   LIGHT MODE — bg-slate-950 sub-containers
+════════════════════════════════════════════════════════ */
+html:not(.dark) .bg-slate-950,
+html:not(.dark) [class*="bg-slate-950"] {
+  background-color: #f5faff !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   BOUTONS PRIMAIRES
+════════════════════════════════════════════════════════ */
+html.dark button.bg-blue-600,
+html.dark button.bg-blue-500,
+html.dark button.bg-indigo-600,
+html.dark a.bg-blue-600,
+html.dark a.bg-indigo-600 {
+  background: #0f1e3d !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  color: #ffffff !important;
+  border-radius: 16px !important;
+  font-weight: 900 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 20px rgba(15,30,61,.55) !important;
+  transition: all .2s !important;
+}
+html.dark button.bg-blue-600:hover,
+html.dark button.bg-blue-500:hover,
+html.dark button.bg-indigo-600:hover {
+  background: #162a55 !important;
+  box-shadow: 0 8px 28px rgba(46,117,182,.40) !important;
+  transform: translateY(-1px) !important;
+}
+
+html:not(.dark) button.bg-blue-600,
+html:not(.dark) button.bg-blue-500,
+html:not(.dark) button.bg-indigo-600,
+html:not(.dark) [class*="bg-[#5c56e3]"],
+html:not(.dark) a.bg-blue-600,
+html:not(.dark) a.bg-indigo-600 {
+  background: #90D5FF !important;
+  border: none !important;
+  color: #0f2a55 !important;
+  border-radius: 16px !important;
+  font-weight: 900 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 20px rgba(168,212,255,.55) !important;
+  transition: all .2s !important;
+}
+html:not(.dark) button.bg-blue-600:hover,
+html:not(.dark) button.bg-blue-500:hover,
+html:not(.dark) button.bg-indigo-600:hover,
+html:not(.dark) [class*="bg-[#5c56e3]"]:hover {
+  background: #8ec5fb !important;
+  box-shadow: 0 8px 28px rgba(168,212,255,.70) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Text inside bg-[#5c56e3] elements in light mode */
+html:not(.dark) [class*="bg-[#5c56e3]"] * {
+  color: #0f2a55 !important;
+}
+
+/* Boutons emerald */
+html.dark button.bg-emerald-600,
+html.dark button.bg-emerald-500 {
+  background: #065f46 !important;
+  border: 1px solid rgba(16,185,129,.25) !important;
+  color: #ffffff !important;
+}
+html.dark button.bg-emerald-600:hover { background: #047857 !important; }
+html:not(.dark) button.bg-emerald-600,
+html:not(.dark) button.bg-emerald-500 {
+  background: #059669 !important;
+  color: #ffffff !important;
+}
+
+/* Boutons rose */
+html.dark button.bg-rose-600,
+html.dark button.bg-rose-500 {
+  background: #9f1239 !important;
+  border: 1px solid rgba(244,63,94,.25) !important;
+  color: #ffffff !important;
+}
+html:not(.dark) button.bg-rose-600,
+html:not(.dark) button.bg-rose-500 {
+  background: #e11d48 !important;
+  color: #ffffff !important;
+}
+
+/* Boutons amber */
+html.dark button.bg-amber-500 {
+  background: #92400e !important;
+  border: 1px solid rgba(245,158,11,.25) !important;
+  color: #ffffff !important;
+}
+html:not(.dark) button.bg-amber-500 {
+  background: #f59e0b !important;
+  color: #ffffff !important;
+}
+
+/* Boutons slate/ghost — LIGHT → bleu clair */
+html:not(.dark) button.bg-slate-900,
+html:not(.dark) button.bg-slate-800 {
+  background: #a8d4ff !important;
+  border: 1px solid rgba(168,212,255,.60) !important;
+  color: #0f2a55 !important;
+  box-shadow: 0 2px 12px rgba(168,212,255,.35) !important;
+}
+html:not(.dark) button.bg-slate-900:hover,
+html:not(.dark) button.bg-slate-800:hover {
+  background: #8ec5fb !important;
+  box-shadow: 0 4px 18px rgba(168,212,255,.50) !important;
+}
+/* Boutons inside hardcoded dark containers — LIGHT → bleu clair */
+html:not(.dark) [class*="bg-[#0a0c14]"] button,
+html:not(.dark) [class*="bg-[#0f172a]"] button,
+html:not(.dark) [class*="bg-[#0f1423]"] button,
+html:not(.dark) [class*="bg-[#050810]"] button {
+  background: #a8d4ff !important;
+  border: 1px solid rgba(168,212,255,.60) !important;
+  color: #0f2a55 !important;
+  box-shadow: 0 2px 12px rgba(168,212,255,.35) !important;
+}
+html:not(.dark) [class*="bg-[#0a0c14]"] button:hover,
+html:not(.dark) [class*="bg-[#0f172a]"] button:hover {
+  background: #8ec5fb !important;
+}
+/* Boutons slate/ghost — DARK */
+html.dark button.bg-slate-900,
+html.dark button.bg-slate-800 {
+  background: rgba(15,30,61,.80) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  color: rgba(255,255,255,.70) !important;
+}
+
+html:not(.dark) button.bg-slate-100,
+html:not(.dark) button.bg-slate-50,
+html:not(.dark) button.bg-white {
+  background: rgba(255,255,255,.90) !important;
+  border: 1px solid rgba(168,212,255,.40) !important;
+  color: #1e3a5f !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   WELCOME BANNERS
+════════════════════════════════════════════════════════ */
+html.dark [class*="bg-[#312e81]"],
+html.dark [class*="bg-[#2d2a8a]"],
+html.dark [class*="bg-indigo-950"] {
+  background: linear-gradient(135deg, #0D2148 0%, #1A3A6B 100%) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+}
+html:not(.dark) [class*="bg-[#312e81]"],
+html:not(.dark) [class*="bg-[#2d2a8a]"],
+html:not(.dark) [class*="bg-indigo-950"] {
+  background: #ffffff !important;
+  border: 1px solid rgba(168,212,255,.35) !important;
+  box-shadow: 0 2px 16px rgba(168,212,255,.15) !important;
+}
+/* Text in welcome banners — light: dark text, dark: white */
+html:not(.dark) [class*="bg-[#312e81]"] *,
+html:not(.dark) [class*="bg-[#2d2a8a]"] *,
+html:not(.dark) [class*="bg-indigo-950"] * {
+  color: #0f2a55 !important;
+}
+/* Preserve sub-colored elements in banners */
+html:not(.dark) [class*="bg-[#312e81]"] .text-indigo-200,
+html:not(.dark) [class*="bg-[#2d2a8a]"] .text-indigo-200,
+html:not(.dark) [class*="bg-indigo-950"] .text-indigo-200 {
+  color: #3d6b9e !important;
+}
+html:not(.dark) [class*="bg-[#312e81]"] .text-emerald-400,
+html:not(.dark) [class*="bg-[#312e81]"] .text-amber-400,
+html:not(.dark) [class*="bg-[#2d2a8a]"] .text-emerald-400,
+html:not(.dark) [class*="bg-indigo-950"] .text-emerald-400 {
+  color: #059669 !important;
+}
+html:not(.dark) [class*="bg-[#312e81]"] .text-amber-400,
+html:not(.dark) [class*="bg-[#2d2a8a]"] .text-amber-400,
+html:not(.dark) [class*="bg-indigo-950"] .text-amber-400 {
+  color: #d97706 !important;
+}
+/* Sub-containers inside banners → light bg */
+html:not(.dark) [class*="bg-[#312e81]"] [class*="bg-white/"],
+html:not(.dark) [class*="bg-[#2d2a8a]"] [class*="bg-white/"],
+html:not(.dark) [class*="bg-indigo-950"] [class*="bg-white/"],
+html:not(.dark) [class*="bg-[#312e81]"] [class*="bg-emerald-500/"],
+html:not(.dark) [class*="bg-[#2d2a8a]"] [class*="bg-emerald-500/"],
+html:not(.dark) [class*="bg-indigo-950"] [class*="bg-emerald-500/"] {
+  background-color: rgba(168,212,255,.15) !important;
+  border-color: rgba(168,212,255,.30) !important;
+}
+
+/* welcome-banner class */
+.welcome-banner {
+  background: #ffffff !important;
+  border: 1px solid rgba(168,212,255,.35) !important;
+  color: #1e293b !important;
+}
+.welcome-banner * { color: inherit; }
+html.dark .welcome-banner {
+  background: linear-gradient(135deg, #0e2f50 0%, #0e2f50 100%) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  color: #ffffff !important;
+}
+html.dark .welcome-banner * { color: #ffffff !important; }
+
+/* ════════════════════════════════════════════════════════
+   INPUTS / SELECTS / TEXTAREAS
+════════════════════════════════════════════════════════ */
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+html.dark select,
+html.dark textarea {
+  background: #0f1e3d !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  color: #ffffff !important;
+  border-radius: 16px !important;
+  transition: border-color .2s, box-shadow .2s !important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder { color: rgba(255,255,255,.30) !important; }
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: rgba(46,117,182,.55) !important;
+  box-shadow: 0 0 0 4px rgba(46,117,182,.15) !important;
+  outline: none !important;
+}
+
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background: #ffffff !important;
+  border: 1px solid rgba(168,212,255,.50) !important;
+  color: #0f2a55 !important;
+  border-radius: 16px !important;
+  transition: border-color .2s, box-shadow .2s !important;
+}
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder { color: #94a3b8 !important; }
+html:not(.dark) input:focus,
+html:not(.dark) select:focus,
+html:not(.dark) textarea:focus {
+  border-color: #a8d4ff !important;
+  box-shadow: 0 0 0 4px rgba(168,212,255,.35) !important;
+  outline: none !important;
+}
+
+html.dark select option {
+  background: #0f1e3d !important;
+  color: #ffffff !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   TABLES
+════════════════════════════════════════════════════════ */
+html.dark thead tr  { background: rgba(46,117,182,.14) !important; }
+html.dark thead th  {
+  color: rgba(255,255,255,.38) !important;
+  font-size: 10px !important; font-weight: 900 !important;
+  text-transform: uppercase !important; letter-spacing: .15em !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
+}
+html.dark tbody tr  { border-bottom: 1px solid rgba(255,255,255,.05) !important; transition: background .15s !important; }
+html.dark tbody tr:hover { background: rgba(46,117,182,.08) !important; }
+html.dark tbody td  { color: rgba(255,255,255,.60) !important; font-size: 13px !important; }
+
+html:not(.dark) thead tr { background: rgba(168,212,255,.15) !important; }
+html:not(.dark) thead th {
+  color: #3d6b9e !important;
+  font-size: 10px !important; font-weight: 900 !important;
+  text-transform: uppercase !important; letter-spacing: .15em !important;
+  border-bottom: 1px solid rgba(168,212,255,.30) !important;
+}
+html:not(.dark) tbody tr  { border-bottom: 1px solid rgba(168,212,255,.15) !important; transition: background .15s !important; }
+html:not(.dark) tbody tr:hover { background: rgba(168,212,255,.08) !important; }
+html:not(.dark) tbody td  { color: #1e3a5f !important; font-size: 13px !important; }
+
+/* ════════════════════════════════════════════════════════
+   MODALS / OVERLAYS
+════════════════════════════════════════════════════════ */
+html.dark [role="dialog"],
+html.dark [class*="modal"] {
+  background: rgba(15,30,61,.92) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 28px !important;
+  backdrop-filter: blur(24px) !important;
+  box-shadow: 0 40px 120px rgba(0,0,0,.60) !important;
+}
+html:not(.dark) [role="dialog"],
+html:not(.dark) [class*="modal"] {
+  background: rgba(255,255,255,.97) !important;
+  border: 1px solid rgba(168,212,255,.40) !important;
+  border-radius: 28px !important;
+  backdrop-filter: blur(24px) !important;
+  box-shadow: 0 40px 120px rgba(168,212,255,.28) !important;
+}
+
+html.dark .fixed.inset-0[class*="bg-slate-950"],
+html.dark .fixed.inset-0[class*="backdrop"] {
+  background: rgba(6,13,31,.78) !important;
+  backdrop-filter: blur(8px) !important;
+}
+html:not(.dark) .fixed.inset-0[class*="bg-slate-950"],
+html:not(.dark) .fixed.inset-0[class*="backdrop"] {
+  background: rgba(168,212,255,.35) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   DROPDOWNS / POPOVER
+════════════════════════════════════════════════════════ */
+html.dark [class*="dropdown"],
+html.dark [class*="popover"] {
+  background: #0f1e3d !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,.50) !important;
+}
+html:not(.dark) [class*="dropdown"],
+html:not(.dark) [class*="popover"] {
+  background: #ffffff !important;
+  border: 1px solid rgba(168,212,255,.38) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 48px rgba(168,212,255,.22) !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   BADGES
+════════════════════════════════════════════════════════ */
+html.dark span.bg-emerald-50,
+html.dark span.bg-emerald-100,
+html.dark div.bg-emerald-50 { background: rgba(16,185,129,.12) !important; }
+html.dark span.bg-rose-50,
+html.dark span.bg-rose-100,
+html.dark div.bg-rose-50 { background: rgba(244,63,94,.12) !important; }
+html.dark span.bg-amber-50,
+html.dark span.bg-amber-100,
+html.dark div.bg-amber-50 { background: rgba(245,158,11,.12) !important; }
+html.dark span.bg-indigo-50,
+html.dark span.bg-indigo-100,
+html.dark div.bg-indigo-50 { background: rgba(99,102,241,.12) !important; }
+html.dark span.bg-blue-50,
+html.dark div.bg-blue-50 { background: rgba(59,130,246,.12) !important; }
+
+/* ════════════════════════════════════════════════════════
+   DIVIDERS & SCROLLBAR
+════════════════════════════════════════════════════════ */
+html.dark hr { border-color: rgba(255,255,255,.07) !important; }
+html:not(.dark) hr { border-color: rgba(168,212,255,.28) !important; }
+
+html.dark  ::-webkit-scrollbar             { width:5px; height:5px; }
+html.dark  ::-webkit-scrollbar-track       { background: transparent; }
+html.dark  ::-webkit-scrollbar-thumb       { background: rgba(46,117,182,.38); border-radius:10px; }
+html.dark  ::-webkit-scrollbar-thumb:hover { background: rgba(96,165,250,.55); }
+
+html:not(.dark) ::-webkit-scrollbar             { width:5px; height:5px; }
+html:not(.dark) ::-webkit-scrollbar-track       { background: transparent; }
+html:not(.dark) ::-webkit-scrollbar-thumb       { background: rgba(168,212,255,.55); border-radius:10px; }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgba(58,143,212,.65); }
+
+/* ════════════════════════════════════════════════════════
+   RECHARTS
+════════════════════════════════════════════════════════ */
+html.dark .recharts-cartesian-grid-horizontal line,
+html.dark .recharts-cartesian-grid-vertical line  { stroke: rgba(255,255,255,.05) !important; }
+html.dark .recharts-text                          { fill:  rgba(255,255,255,.35) !important; }
+html.dark .recharts-default-tooltip               { background: #0f1e3d !important; border: 1px solid rgba(255,255,255,.08) !important; border-radius:14px !important; color:#fff !important; }
+
+html:not(.dark) .recharts-cartesian-grid-horizontal line,
+html:not(.dark) .recharts-cartesian-grid-vertical line { stroke: rgba(168,212,255,.22) !important; }
+html:not(.dark) .recharts-text                         { fill: #5a87b5 !important; }
+html:not(.dark) .recharts-default-tooltip              { background:#fff !important; border:1px solid rgba(168,212,255,.38) !important; border-radius:14px !important; }
+
+html.dark .recharts-wrapper { color: #fff !important; }
+html:not(.dark) .recharts-wrapper { color: #0f2a55 !important; }
+
+/* ════════════════════════════════════════════════════════
+   ANIMATIONS ENTRÉE
+════════════════════════════════════════════════════════ */
+.dashboard-animate { animation: fadeInUp .4s ease both; }
+.dashboard-animate:nth-child(1) { animation-delay: .05s; }
+.dashboard-animate:nth-child(2) { animation-delay: .10s; }
+.dashboard-animate:nth-child(3) { animation-delay: .15s; }
+.dashboard-animate:nth-child(4) { animation-delay: .20s; }
+.dashboard-animate:nth-child(5) { animation-delay: .25s; }
+
+/* ════════════════════════════════════════════════════════
+   FOCUS RING & SELECTION
+════════════════════════════════════════════════════════ */
+*:focus-visible {
+  outline: 2px solid rgba(46,117,182,.50);
+  outline-offset: 2px;
+}
+::selection {
+  background-color: rgba(46,117,182,.30);
+  color: inherit;
+}

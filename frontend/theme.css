@@ -1,0 +1,440 @@
+/* ═══════════════════════════════════════════════════════════════
+   SHIELDOPS — COMPLETE THEME SYSTEM v3
+   Refonte Visuelle Complète (Light & Dark Mode)
+   Appliqué UNIQUEMENT au Layout (pas à la page de login AuthView)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIABLES CSS — PALETTE LIGHT MODE
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Light Mode — Gradients & Backgrounds */
+  --light-main-bg: linear-gradient(135deg, #D1E9FF 0%, #F0F7FF 100%);
+  --light-primary-bg: #D1E9FF;
+  --light-secondary-bg: #F0F7FF;
+  
+  /* Light Mode — Surfaces */
+  --light-sidebar-bg: rgba(255, 255, 255, 0.95);
+  --light-header-bg: rgba(255, 255, 255, 0.90);
+  --light-card-bg: rgba(255, 255, 255, 0.95);
+  --light-input-bg: #FFFFFF;
+  
+  /* Light Mode — Borders & Accents */
+  --light-border: rgba(168, 212, 255, 0.40);
+  --light-border-secondary: rgba(168, 212, 255, 0.60);
+  --light-accent-blue: #A8D4FF;
+  --light-accent-blue-hover: #8EC5FB;
+  --light-accent-sky: #60B0FF;
+  
+  /* Light Mode — Text */
+  --light-text-primary: #1E293B;
+  --light-text-secondary: #334155;
+  --light-text-tertiary: #64748B;
+  --light-text-muted: #94A3B8;
+  
+  /* Light Mode — Shadows */
+  --light-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --light-shadow-md: 0 4px 16px rgba(168, 212, 255, 0.30);
+  --light-shadow-lg: 0 8px 32px rgba(168, 212, 255, 0.40);
+  --light-shadow-card: 0 10px 40px rgba(168, 212, 255, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIABLES CSS — PALETTE DARK MODE
+   ═══════════════════════════════════════════════════════════════ */
+html.dark {
+  /* Dark Mode — Gradients & Backgrounds */
+  --dark-main-bg: linear-gradient(135deg, #051937 0%, #004D7A 100%);
+  --dark-primary-bg: #051937;
+  --dark-secondary-bg: #004D7A;
+  
+  /* Dark Mode — Surfaces */
+  --dark-sidebar-bg: rgba(5, 25, 55, 0.85);
+  --dark-header-bg: rgba(6, 13, 31, 0.82);
+  --dark-card-bg: rgba(15, 30, 61, 0.82);
+  --dark-input-bg: rgba(15, 30, 61, 0.90);
+  
+  /* Dark Mode — Borders & Accents */
+  --dark-border: rgba(255, 255, 255, 0.08);
+  --dark-border-secondary: rgba(255, 255, 255, 0.12);
+  --dark-accent-blue: #2E75B6;
+  --dark-accent-blue-hover: #3A8FD0;
+  --dark-accent-cyan: #60A5FA;
+  
+  /* Dark Mode — Text */
+  --dark-text-primary: #FFFFFF;
+  --dark-text-secondary: rgba(255, 255, 255, 0.82);
+  --dark-text-tertiary: rgba(255, 255, 255, 0.60);
+  --dark-text-muted: rgba(255, 255, 255, 0.40);
+  
+  /* Dark Mode — Shadows */
+  --dark-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.40);
+  --dark-shadow-md: 0 4px 16px rgba(46, 117, 182, 0.25);
+  --dark-shadow-lg: 0 8px 32px rgba(46, 117, 182, 0.35);
+  --dark-shadow-card: 0 10px 40px rgba(5, 25, 55, 0.60);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT CONTAINER SELECTOR — Isolate styles from AuthView
+   Apply ONLY to Layout dashboard with .shieldops-layout class
+   AuthView does NOT have this class, so it will NOT be affected
+   ═══════════════════════════════════════════════════════════════ */
+
+.shieldops-layout {
+  background: var(--light-main-bg);
+}
+
+html.dark .shieldops-layout {
+  background: var(--dark-main-bg);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR — GLASSMORPHISM (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.shieldops-layout aside,
+.shieldops-layout [class*="sidebar"] {
+  background: var(--light-sidebar-bg) !important;
+  border-right: 1px solid var(--light-border) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: var(--light-shadow-md) !important;
+}
+
+html.dark .shieldops-layout aside,
+html.dark .shieldops-layout [class*="sidebar"] {
+  background: var(--dark-sidebar-bg) !important;
+  border-right: 1px solid var(--dark-border) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: var(--dark-shadow-md) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER / TOPBAR — GLASSMORPHISM (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.shieldops-layout header {
+  background: var(--light-header-bg) !important;
+  border-bottom: 1px solid var(--light-border) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: var(--light-shadow-sm) !important;
+}
+
+html.dark .shieldops-layout header {
+  background: var(--dark-header-bg) !important;
+  border-bottom: 1px solid var(--dark-border) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: var(--dark-shadow-md) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARDS & PANELS — GLASSMORPHISM (ONLY in Layout)
+   Narrowed to only [class*="card"] and [class*="panel"] to avoid
+   overriding inputs, buttons, and other rounded elements.
+   Background for .rounded-xl/.rounded-2xl is handled by shieldops.css.
+   ═══════════════════════════════════════════════════════════════ */
+.shieldops-layout [class*="card"],
+.shieldops-layout [class*="panel"] {
+  background: var(--light-card-bg) !important;
+  border: 1px solid var(--light-border) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: var(--light-shadow-card) !important;
+}
+
+html.dark .shieldops-layout [class*="card"],
+html.dark .shieldops-layout [class*="panel"] {
+  background: var(--dark-card-bg) !important;
+  border: 1px solid var(--dark-border) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: var(--dark-shadow-card) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS — PRIMARY (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.shieldops-layout button.bg-blue-600,
+.shieldops-layout button.bg-blue-500,
+.shieldops-layout button.bg-indigo-600 {
+  background: var(--light-accent-blue) !important;
+  border: none !important;
+  color: var(--light-text-primary) !important;
+  box-shadow: var(--light-shadow-md) !important;
+  transition: all 0.2s ease !important;
+}
+
+.shieldops-layout button.bg-blue-600:hover,
+.shieldops-layout button.bg-blue-500:hover,
+.shieldops-layout button.bg-indigo-600:hover {
+  background: var(--light-accent-blue-hover) !important;
+  box-shadow: var(--light-shadow-lg) !important;
+  transform: translateY(-2px) !important;
+}
+
+html.dark .shieldops-layout button.bg-blue-600,
+html.dark .shieldops-layout button.bg-blue-500,
+html.dark .shieldops-layout button.bg-indigo-600 {
+  background: var(--dark-accent-blue) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-md) !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark .shieldops-layout button.bg-blue-600:hover,
+html.dark .shieldops-layout button.bg-blue-500:hover,
+html.dark .shieldops-layout button.bg-indigo-600:hover {
+  background: var(--dark-accent-blue-hover) !important;
+  box-shadow: var(--dark-shadow-lg) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INPUTS & TEXTAREAS (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.shieldops-layout input:not([type="checkbox"]):not([type="radio"]),
+.shieldops-layout select,
+.shieldops-layout textarea {
+  background: var(--light-input-bg) !important;
+  border: 1px solid var(--light-border) !important;
+  color: var(--light-text-primary) !important;
+  box-shadow: var(--light-shadow-sm) !important;
+  transition: all 0.2s ease !important;
+}
+
+.shieldops-layout input::placeholder,
+.shieldops-layout textarea::placeholder {
+  color: var(--light-text-muted) !important;
+}
+
+.shieldops-layout input:focus,
+.shieldops-layout select:focus,
+.shieldops-layout textarea:focus {
+  border-color: var(--light-accent-blue) !important;
+  box-shadow: 0 0 0 4px rgba(168, 212, 255, 0.25) !important;
+  outline: none !important;
+}
+
+html.dark .shieldops-layout input:not([type="checkbox"]):not([type="radio"]),
+html.dark .shieldops-layout select,
+html.dark .shieldops-layout textarea {
+  background: var(--dark-input-bg) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: var(--dark-shadow-sm) !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark .shieldops-layout input::placeholder,
+html.dark .shieldops-layout textarea::placeholder {
+  color: var(--dark-text-muted) !important;
+}
+
+html.dark .shieldops-layout input:focus,
+html.dark .shieldops-layout select:focus,
+html.dark .shieldops-layout textarea:focus {
+  border-color: var(--dark-accent-cyan) !important;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15) !important;
+  outline: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEXT COLORS (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+html:not(.dark) .shieldops-layout .text-slate-900,
+html:not(.dark) .shieldops-layout .text-slate-800,
+html:not(.dark) .shieldops-layout .text-slate-700 {
+  color: var(--light-text-primary) !important;
+}
+
+html:not(.dark) .min-h-screen.flex:has(> aside) .text-slate-600 {
+  color: var(--light-text-secondary) !important;
+}
+
+html:not(.dark) .shieldops-layout .text-slate-500 {
+  color: var(--light-text-tertiary) !important;
+}
+
+html:not(.dark) .min-h-screen.flex:has(> aside) .text-slate-400 {
+  color: var(--light-text-muted) !important;
+}
+
+html.dark .shieldops-layout .text-white,
+html.dark .shieldops-layout .text-slate-100,
+html.dark .shieldops-layout .text-slate-200 {
+  color: var(--dark-text-primary) !important;
+}
+
+html.dark .shieldops-layout .text-slate-300 {
+  color: var(--dark-text-secondary) !important;
+}
+
+html.dark .shieldops-layout .text-slate-400 {
+  color: var(--dark-text-tertiary) !important;
+}
+
+html.dark .shieldops-layout .text-slate-500,
+html.dark .shieldops-layout .text-slate-600 {
+  color: var(--dark-text-muted) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TABLES — STYLING (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.min-h-screen.flex:has(> aside) thead tr {
+  background: rgba(168, 212, 255, 0.15) !important;
+}
+
+.min-h-screen.flex:has(> aside) thead th {
+  color: var(--light-text-secondary) !important;
+  border-bottom: 1px solid var(--light-border-secondary) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+}
+
+.min-h-screen.flex:has(> aside) tbody tr {
+  border-bottom: 1px solid var(--light-border) !important;
+  transition: background 0.15s ease !important;
+}
+
+.min-h-screen.flex:has(> aside) tbody tr:hover {
+  background: rgba(168, 212, 255, 0.10) !important;
+}
+
+.min-h-screen.flex:has(> aside) tbody td {
+  color: var(--light-text-secondary) !important;
+}
+
+html.dark .shieldops-layout thead tr {
+  background: rgba(46, 117, 182, 0.14) !important;
+}
+
+html.dark .shieldops-layout thead th {
+  color: var(--dark-text-muted) !important;
+  border-bottom: 1px solid var(--dark-border) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+}
+
+html.dark .shieldops-layout tbody tr {
+  border-bottom: 1px solid var(--dark-border) !important;
+  transition: background 0.15s ease !important;
+}
+
+html.dark .shieldops-layout tbody tr:hover {
+  background: rgba(46, 117, 182, 0.08) !important;
+}
+
+html.dark .shieldops-layout tbody td {
+  color: var(--dark-text-tertiary) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME TOGGLE & SPECIAL BUTTONS (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.min-h-screen.flex:has(> aside) button.rounded-xl {
+  background: rgba(168, 212, 255, 0.30) !important;
+  border: 1px solid rgba(168, 212, 255, 0.50) !important;
+}
+
+.min-h-screen.flex:has(> aside) button.rounded-xl:hover {
+  background: rgba(168, 212, 255, 0.50) !important;
+}
+
+html.dark .shieldops-layout button.rounded-xl {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+
+html.dark .shieldops-layout button.rounded-xl:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY CLASSES FOR COMMON PATTERNS (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.min-h-screen.flex .glass-light {
+  background: var(--light-card-bg);
+  border: 1px solid var(--light-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--light-shadow-card);
+}
+
+.min-h-screen.flex .glass-dark {
+  background: var(--dark-card-bg);
+  border: 1px solid var(--dark-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--dark-shadow-card);
+}
+
+html:not(.dark) .min-h-screen.flex .glass {
+  background: var(--light-card-bg);
+  border: 1px solid var(--light-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--light-shadow-card);
+}
+
+html.dark .min-h-screen.flex .glass {
+  background: var(--dark-card-bg);
+  border: 1px solid var(--dark-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--dark-shadow-card);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR STYLING (ONLY in Layout)
+   ═══════════════════════════════════════════════════════════════ */
+.min-h-screen.flex .custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.min-h-screen.flex .custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.min-h-screen.flex .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(168, 212, 255, 0.40);
+  border-radius: 4px;
+}
+
+.min-h-screen.flex .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 212, 255, 0.60);
+}
+
+html.dark .min-h-screen.flex .custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html.dark .min-h-screen.flex .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+html.dark .min-h-screen.flex .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REPORT VIEW — DARK MODE (Full width, no rounded corners)
+   ═══════════════════════════════════════════════════════════════ */
+.report-view-dark {
+  background: #020617 !important;
+  overflow: hidden;
+}
+
+.report-view-dark * {
+  border-radius: 0 !important;
+}
+
+.report-view-dark section,
+.report-view-dark [class*="space-y-32"] > div {
+  background: #020617 !important;
+  border: none !important;
+}
+
+.report-view-dark [class*="shadow-"] {
+  box-shadow: none !important;
+}
+
+.report-view-dark [class*="bg-slate-50"],
+.report-view-dark [class*="bg-[#"] {
+  background: #020617 !important;
+}

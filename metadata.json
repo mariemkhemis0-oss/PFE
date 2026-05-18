@@ -1,0 +1,5 @@
+{
+  "name": "CyberAudit AI Platform",
+  "description": "Plateforme d'audit de sécurité sophistiquée. Gère les identités, le multi-tenant, l'orchestration de scanners (GVM/OpenVAS, Nuclei), le versioning de templates de rapports et le monitoring de santé infrastructure en temps réel.",
+  "requestFramePermissions": []
+}

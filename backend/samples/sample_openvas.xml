@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <host>
+    <ip>192.168.1.10</ip>
+    <hostname>srv-web-01</hostname>
+  </host>
+  <results>
+    <result>
+      <name>SSL/TLS: Deprecated SSLv2 and SSLv3 Protocol Detection</name>
+      <host>192.168.1.10</host>
+      <port>443/tcp</port>
+      <severity>7.5</severity>
+      <threat>High</threat>
+      <description>The remote host supports the deprecated SSLv2/SSLv3 protocol.</description>
+      <solution>Disable SSLv2 and SSLv3 on the server.</solution>
+      <cvss_base>7.5</cvss_base>
+      <cve>CVE-2014-3566</cve>
+    </result>
+    <result>
+      <name>Apache HTTP Server Outdated Version Detection</name>
+      <host>192.168.1.10</host>
+      <port>80/tcp</port>
+      <severity>9.8</severity>
+      <threat>Critical</threat>
+      <description>The remote Apache HTTP Server is outdated and vulnerable.</description>
+      <solution>Update Apache to the latest stable version.</solution>
+      <cvss_base>9.8</cvss_base>
+      <cve>CVE-2021-41773</cve>
+    </result>
+    <result>
+      <name>SSH Weak Encryption Algorithms Supported</name>
+      <host>192.168.1.10</host>
+      <port>22/tcp</port>
+      <severity>4.3</severity>
+      <threat>Medium</threat>
+      <description>The SSH server supports weak encryption algorithms.</description>
+      <solution>Disable weak encryption algorithms in SSH configuration.</solution>
+      <cvss_base>4.3</cvss_base>
+      <cve>CVE-2008-5161</cve>
+    </result>
+    <result>
+      <name>Open Telnet Port</name>
+      <host>192.168.1.10</host>
+      <port>23/tcp</port>
+      <severity>2.6</severity>
+      <threat>Low</threat>
+      <description>The remote host has an open Telnet port which is unencrypted.</description>
+      <solution>Disable Telnet and use SSH instead.</solution>
+      <cvss_base>2.6</cvss_base>
+      <cve></cve>
+    </result>
+  </results>
+</report>
