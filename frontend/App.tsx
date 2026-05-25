@@ -84,8 +84,16 @@ const App: React.FC = () => {
 
 // REMPLACE le useEffect unique par deux useEffects séparés :
 
-// 1 — Charge users et vulns (pas de dépendance user)
+// 1 — Charge users et vulns uniquement pour les rôles non-CLIENT
 useEffect(() => {
+  const currentRole = (user?.role || '').toUpperCase();
+
+  // Les CLIENTs n'ont pas accès à /api/users ni /api/vulnerabilities → évite le toast 403
+  if (!user || currentRole === 'CLIENT') {
+    setAllUsers([]);
+    return;
+  }
+
   const loadData = async () => {
     try {
       const usersData = await usersAPI.getAll();
@@ -106,7 +114,7 @@ useEffect(() => {
     window.removeEventListener('cyberaudit_data_updated', handleGlobalUpdate);
     window.removeEventListener('storage', handleGlobalUpdate);
   };
-}, []);
+}, [user]); // ← se relance à chaque changement de user (login/logout)
 
 // 2 — Charge les notifs UNIQUEMENT pour le user connecté
 useEffect(() => {
